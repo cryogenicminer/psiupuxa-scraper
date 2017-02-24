@@ -1,26 +1,30 @@
 from bs4 import BeautifulSoup
+# import ConfigParser
 import requests
 import urllib
+import sys
 import os
 import re
 
-#check to see if folder exists,
-#agains master list, so that you can delete a image and it wont redowload
 #Add support for all pages
-#Start a cronjob via python
+
+#check to see if folder exists,
+#Start a cronjob via python -ifneeded
+
+# get parsed images
+# scrape images, if image is in parsed images escape it
+# download new images
+# write new image list to photos
+
+photoList = open("blacklistPhotos.ini").read().splitlines()
+# print photoList
 
 website = 'http://psiupuxa.com/'
 mainDir = os.getcwd()
 photoDir = mainDir + '/Photos'
 deviceType = 'desktop'
 downloadLinks = {}
-
-# settings = open('settings.txt','r')
-# logs = settings.read()
-# settings.close()
-# print logs
-
-photoList = os.listdir(photoDir)
+nuePhotoList = photoList
 
 r  = requests.get(website)
 html = r.text
@@ -28,7 +32,7 @@ soup = BeautifulSoup(html, "lxml")
 
 posts = soup.find_all('div', class_='post')
 for post in posts:
-    pass
+    # continue
     imgPath = post.find('h4').text.replace("#", "").replace(" ", "_").title() + '.jpg'
     if imgPath not in photoList:
         links = post.find_all('a')
@@ -36,11 +40,21 @@ for post in posts:
             href = link.get('href')
             if deviceType in href:
                 imgURL = href
+
+        photoList += [imgPath]
         downloadLinks[imgPath] = imgURL
 
 if downloadLinks:
+
+    writePhotos = open('blacklistPhotos.ini', 'w')
+    photoList = '\n'.join(photoList)
+    writePhotos.writelines(photoList)
+    writePhotos.close()
+
     os.chdir(photoDir)
     for name in downloadLinks:
-        pass
-        print download
+        # continue
+        print 'downloading: ' + name
         urllib.urlretrieve(downloadLinks[name], name)
+
+    print 'finished downloading images'
