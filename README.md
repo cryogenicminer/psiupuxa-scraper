@@ -1,6 +1,6 @@
-## psiupiuxa-scraper
+## psiupuxa-scraper
 A simple Python script to download all images from:
-www.psiupiuxa.com
+https://psiupuxa.com/
 ***
 ### Instructions:
 > - Download, and place files in a folder
@@ -9,4 +9,4 @@ www.psiupiuxa.com
 
 ***
 ### Ideas:
-> - Place in Dropbox folder and have it sync to all devices. i.e. for screensaver or desktop background
+> - Place in Dropbox/ Google Photos/ or other folder and have it sync to all devices. i.e. for screensaver or desktop background
