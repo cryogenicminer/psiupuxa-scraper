@@ -17,7 +17,7 @@ import re
 # write new image list to photos
 
 photoList = open("blacklistPhotos.ini").read().splitlines()
-# print photoList
+# print(photoList)
 
 website = 'http://psiupuxa.com/'
 mainDir = os.getcwd()
@@ -40,6 +40,7 @@ for post in posts:
             href = link.get('href')
             if deviceType in href:
                 imgURL = href
+                print(imgURL)
 
         photoList += [imgPath]
         downloadLinks[imgPath] = imgURL
@@ -54,7 +55,9 @@ if downloadLinks:
     os.chdir(photoDir)
     for name in downloadLinks:
         # continue
-        print 'downloading: ' + name
-        urllib.urlretrieve(downloadLinks[name], name)
+        print('downloading: ' + name)
+        print(downloadLinks[name], name)
+        # urllib
+        urllib.request.urlretrieve(downloadLinks[name], name)
 
-    print 'finished downloading images'
+    print('finished downloading images')
